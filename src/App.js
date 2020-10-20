@@ -1,62 +1,83 @@
-import React, { useState, useEffect, Suspense, lazy }from 'react';
-import { BrowserRouter as Switch, Route, NavLink } from 'react-router-dom';
+import React, { Component } from 'react';
+import { BrowserRouter as Router, Route } from 'react-router-dom';
 import axios from 'axios';
 
 import Header from './Components/Header';
-// import People from './Components/People';
+import MainMenu from './Components/MainMenu';
+import People from './Components/People';
+import EachPerson from './Components/EachPerson';
+import Movies from './Components/Movies';
+import EachMovie from './Components/EachMovie';
 
-const People = lazy( () => import('./Components/People'));
+class App extends Component {
+  constructor() {
+      super();
+      this.state = {
+        searchQuery: '',
+        results: {people: null, films: null, planets: null},
+        isLoading: false,
+      };
+  };
 
-function App() {
-  // changing input what user wants to search
-  const [searchQuery, setInput] = useState(null);
-  // saving the corresponding results from API call
-  const [results, getData] = useState({people: null, films: null, planets: null});
-  const [isLoading, setLoading] = useState(false);
+  userChoice = async (e) => {
+    await this.setState({
+      searchQuery: e.target.name,
+    })
 
-  const userChoice = (e) => {
-    setInput(e.target.name);
+    this.getData(this.state.searchQuery, 1)
+
   }
 
-  useEffect( () => {
-    if (searchQuery) {
-      setLoading(true)
-      axios({
-          url: `https://swapi.dev/api/${searchQuery}`,
-          method: 'GET',
-      })
-      .then( (res) => { 
-        getData({...results, [searchQuery]: res.data}) 
-        setLoading(false)
-      })
-      .catch( error => { console.log(error); })
-    }
-  }, [searchQuery]);
+  getData = (whatToGet, page) => {
+    this.setState({ isLoading: true });
+    axios({
+      url: `https://swapi.dev/api/${whatToGet}`,
+      method: 'GET',
+      params: {
+        page: page,
+    },
+  })
+  .then( (res) => {
+    this.setState({
+      isLoading: false,
+      results: {
+        ...this.state.results,
+        [this.state.searchQuery]: res.data,
+      }
+    })
+  })
+  .catch( error => { console.log(error); })
+  }
 
-  return (
-    <>
-      <Suspense fallback={<div>Loading...</div>}>
-        <Switch>
-          <Route exact path="/">
-            <Header />
-            <NavLink to="/people" name="people" onClick={ e => userChoice(e) } >people</NavLink>
-            <NavLink to="/people" name="films" onClick={  e => userChoice(e) } >movies</NavLink>
-            <NavLink to="/people" name="planets" onClick={  e => userChoice(e) } >planets</NavLink>
-          </Route>
 
-          <Route path='/people'>
-            <People
-              res={results.people}
-              loadingStatus = {isLoading}
-            />
 
-            {/* <Movies props={results[searchQuery]}/>
-            <Planets props={results[searchQuery]}/> */}
-          </Route>
-        </Switch>
-      </Suspense>
-    </>
-  );
+
+  render() {
+    return (
+      <Router basename={process.env.PUBLIC_URL}>
+        <Route exact path="/">
+          <Header />
+          <MainMenu
+            states={this.state} 
+            userChoice={this.userChoice}
+          />
+        </Route>
+
+        <Route exact path="/people">
+          { !this.state.isLoading && this.state.results.people ? <People states={this.state} loadMore={this.getData} /> : <div>Loading...</div>
+          }
+        </Route>
+        <Route path="/people/:personID" component={ EachPerson } />
+
+
+        <Route exact path="/movies">
+          { !this.state.isLoading && this.state.results.films ? <Movies states={this.state} /> : <div>Loading...</div>
+          }
+        </Route>
+        <Route path="/movies/:movieID" component={ EachMovie } />
+
+      </Router>
+    );
+  }
 }
-
 export default App;
