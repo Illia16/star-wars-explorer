@@ -6,8 +6,8 @@ import Header from './Components/Header';
 import MainMenu from './Components/MainMenu';
 import People from './Components/People';
 import EachPerson from './Components/EachPerson';
-import Movies from './Components/Movies';
 import EachMovie from './Components/EachMovie';
+import EachPlanet from './Components/EachPlanet';
 
 class App extends Component {
   constructor() {
@@ -62,20 +62,15 @@ class App extends Component {
             userChoice={this.userChoice}
           />
         </Route>
-
-        <Route exact path="/people">
-          { !this.state.isLoading && this.state.results.people ? <People states={this.state} loadMore={this.getData} /> : <div>Loading...</div>
+        
+        <Route exact path={["/people", "/movies", "/planets"]}>
+          { !this.state.isLoading && this.state.results[this.state.searchQuery] ? <People states={this.state} loadMore={this.getData} /> : <div>Loading...</div>
           }
         </Route>
+
         <Route path="/people/:personID" component={ EachPerson } />
-
-
-        <Route exact path="/movies">
-          { !this.state.isLoading && this.state.results.films ? <Movies states={this.state} /> : <div>Loading...</div>
-          }
-        </Route>
         <Route path="/movies/:movieID" component={ EachMovie } />
-
+        <Route path="/planets/:planetID" component={ EachPlanet } />
       </Router>
     );
   }
