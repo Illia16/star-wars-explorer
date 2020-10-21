@@ -4,14 +4,12 @@ import axios from 'axios';
 
 import Header from './Components/Header';
 import MainMenu from './Components/MainMenu';
-import People from './Components/People';
-import EachPerson from './Components/EachPerson';
-import EachMovie from './Components/EachMovie';
-import EachPlanet from './Components/EachPlanet';
+import MainResults from './Components/MainResults';
+import SubResults from './Components/SubResults';
 
 class App extends Component {
-  constructor() {
-      super();
+  constructor(props) {
+      super(props);
       this.state = {
         searchQuery: '',
         results: {people: null, films: null, planets: null},
@@ -25,7 +23,6 @@ class App extends Component {
     })
 
     this.getData(this.state.searchQuery, 1)
-
   }
 
   getData = (whatToGet, page) => {
@@ -49,9 +46,6 @@ class App extends Component {
   .catch( error => { console.log(error); })
   }
 
-
-
-
   render() {
     return (
       <Router basename={process.env.PUBLIC_URL}>
@@ -63,14 +57,12 @@ class App extends Component {
           />
         </Route>
         
-        <Route exact path={["/people", "/movies", "/planets"]}>
-          { !this.state.isLoading && this.state.results[this.state.searchQuery] ? <People states={this.state} loadMore={this.getData} /> : <div>Loading...</div>
+        <Route exact path={["/people", "/films", "/planets"]}>
+          { !this.state.isLoading && this.state.results[this.state.searchQuery] ? <MainResults states={this.state} loadMore={this.getData} /> : <div>Loading...</div>
           }
         </Route>
 
-        <Route path="/people/:personID" component={ EachPerson } />
-        <Route path="/movies/:movieID" component={ EachMovie } />
-        <Route path="/planets/:planetID" component={ EachPlanet } />
+        <Route path={["/people/:peopleID", "/films/:filmsID", "/planets/:planetsID"]}  component={ SubResults } />
       </Router>
     );
   }

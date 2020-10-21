@@ -6,9 +6,9 @@ const MainMenu = ( props ) => {
 
     return(
         <Route exact path="/">
-            <NavLink to="/people" name="people" onClick={ userChoice } >People</NavLink>
-            <NavLink to="/movies" name="films" onClick={  userChoice } >Movies</NavLink>
-            <NavLink to="/planets" name="planets" onClick={userChoice } >Planets</NavLink>
+            <li><NavLink to="/people" name="people" onClick={ userChoice } >People</NavLink></li>
+            <li><NavLink to="/films" name="films" onClick={  userChoice } >Movies</NavLink></li>
+            <li><NavLink to="/planets" name="planets" onClick={userChoice } >Planets</NavLink></li>
         </Route>
     );
 };
