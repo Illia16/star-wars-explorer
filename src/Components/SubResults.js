@@ -2,6 +2,10 @@ import React, { Component } from 'react';
 import axios from 'axios';
 import { Route, NavLink } from 'react-router-dom';
 
+import CircularProgress from '@material-ui/core/CircularProgress';
+import Typography from '@material-ui/core/Typography';
+import AppBar from'@material-ui/core/AppBar';
+
 class SubResults extends Component {
     constructor() {
         super();
@@ -31,8 +35,14 @@ class SubResults extends Component {
     render() {
         const {location:{ data: { props: { states: { searchQuery } }} } } = this.props;
         console.log(this.props);
+
         return(
             <>
+                <AppBar>
+                    <Typography variant="h4" component="h1" align="center" >
+                        {searchQuery}
+                    </Typography>
+                </AppBar>
                 {  searchQuery === "people" && this.state.results.length ?          
                     <div>
                         <h3>{this.state.results[0].name}</h3>
@@ -57,7 +67,7 @@ class SubResults extends Component {
                         <p>Terrain: {this.state.results[0].terrain}</p>
                         <p>Population: {this.state.results[0].population}</p>
                     </div>
-                    : <div>Loading...</div>
+                    : <CircularProgress></CircularProgress>
                 }
                 
                 <Route path={`/${searchQuery}`}>

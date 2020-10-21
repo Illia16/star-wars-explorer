@@ -1,10 +1,15 @@
 import React from 'react';
+import 'fontsource-roboto';
+import Typography from '@material-ui/core/Typography';
+import AppBar from'@material-ui/core/AppBar';
 
 function Header() {
     return (
-        <header>
-            <h1>Star Wars Explorer</h1>
-        </header>
+        <AppBar>
+            <Typography variant="h4" component="h1" align="center" >
+                Star Wars Explorer
+            </Typography>
+        </AppBar>
     )
 };
 

@@ -1,5 +1,9 @@
 import React from 'react';
 import { NavLink } from 'react-router-dom';
+import "../styles/app.scss";
+
+import Typography from '@material-ui/core/Typography';
+import AppBar from'@material-ui/core/AppBar';
 
 const MainResults = (props) => {
     const {states:{ searchQuery },  switchPage } = props;
@@ -12,7 +16,12 @@ const MainResults = (props) => {
 
     return(
         <>  
-            <h1>Star Wars {searchQuery}</h1>
+            <AppBar>
+                <Typography variant="h4" component="h1" align="center" >
+                Star Wars {searchQuery}
+                </Typography>
+            </AppBar>
+
             <ul className="listOfEntities">
                 {
                     props.states.results[searchQuery].results.map((entity) => {
@@ -34,7 +43,7 @@ const MainResults = (props) => {
                     })
                 }
             </ul>
-
+            
             {
                 next ?
                 <div>
