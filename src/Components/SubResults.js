@@ -30,6 +30,7 @@ class SubResults extends Component {
 
     render() {
         const {location:{ data: { props: { states: { searchQuery } }} } } = this.props;
+        console.log(this.props);
         return(
             <>
                 {  searchQuery === "people" && this.state.results.length ?          

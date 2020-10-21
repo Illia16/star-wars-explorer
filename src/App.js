@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import { BrowserRouter as Router, Route } from 'react-router-dom';
 import axios from 'axios';
+import "./styles/app.scss";
 
 import Header from './Components/Header';
 import MainMenu from './Components/MainMenu';
@@ -8,8 +9,8 @@ import MainResults from './Components/MainResults';
 import SubResults from './Components/SubResults';
 
 class App extends Component {
-  constructor(props) {
-      super(props);
+  constructor() {
+      super();
       this.state = {
         searchQuery: '',
         results: {people: null, films: null, planets: null},
@@ -58,7 +59,7 @@ class App extends Component {
         </Route>
         
         <Route exact path={["/people", "/films", "/planets"]}>
-          { !this.state.isLoading && this.state.results[this.state.searchQuery] ? <MainResults states={this.state} loadMore={this.getData} /> : <div>Loading...</div>
+          { !this.state.isLoading && this.state.results[this.state.searchQuery] ? <MainResults states={this.state} switchPage={this.getData} /> : <div>Loading...</div>
           }
         </Route>
 
