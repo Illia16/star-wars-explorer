@@ -1,35 +1,36 @@
 body {
-    font-size: 2rem;
+    font-size: 1.5rem;
     line-height: 1.6;
-    font-family: 'Raleway', sans-serif;
-    color: black;
+    font-family: 'Roboto', sans-serif;
+    background: url('../assets/bgStarWars.jpg');
+    background-position: center;
+    background-size: cover;
+    background-repeat: no-repeat;
 }
 
-h1,
-h2,
-h3,
-h4{
-    font-family: 'Source Serif Pro', serif;
+.topLevelLists {
     text-transform: uppercase;
+    li {
+        margin: 20px 0;
+    }
+}
+
+a {
+    color: #FFE81F;
+    padding: 5px 10px;
+    transition: all .3s;
+    background: #29292d;
+    width: 100%;
+    border: 1px solid transparent;
+
+    &:hover,
+    &:focus {
+        color: #29292d;
+        background: #FFE81F;
+    }
+}
+
+// Style for a LINK to go one lever up
+.goLevelUp {
     text-align: center;
-}
-
-h1 {
-    font-size: 7.5rem;
-}
-
-h2 {
-    font-size: 4rem;
-}
-
-h3 {
-    font-size: 3rem;
-}
-
-p {
-    margin: 0;
-}
-::placeholder,
-::-webkit-input-placeholder {
-    opacity: 1;
 }

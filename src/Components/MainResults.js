@@ -4,9 +4,18 @@ import "../styles/app.scss";
 
 import Typography from '@material-ui/core/Typography';
 import AppBar from'@material-ui/core/AppBar';
+import 'fontsource-roboto';
+import List from '@material-ui/core/List';
+import ListItem from '@material-ui/core/ListItem';
+import WaitingLogo from '../styles/WaitingLogo';
+import Button from '@material-ui/core/Button';
+import "../styles/app.scss";
+
+// import MyButton from '../styles/MyButton';
 
 const MainResults = (props) => {
-    const {states:{ searchQuery },  switchPage } = props;
+    const {states:{ searchQuery, isLoading },  switchPage } = props;
+    console.log(props);
 
     const next = props.states.results[searchQuery].next;
     const previous = props.states.results[searchQuery].previous;
@@ -22,47 +31,49 @@ const MainResults = (props) => {
                 </Typography>
             </AppBar>
 
-            <ul className="listOfEntities">
+            <List>
                 {
                     props.states.results[searchQuery].results.map((entity) => {
                         return (
                             searchQuery === "people" ?
-                            <li key={entity.name}>
+                            <ListItem key={entity.name} >
                                 <NavLink to={{ pathname: `/people/${entity.name}`, data: {props} }}>{entity.name}</NavLink>
-                            </li>
+                            </ListItem>
                             : searchQuery === "films" ?
-                            <li key={entity.title}>
+                            <ListItem  key={entity.title}>
                                 <NavLink to={{ pathname: `/films/${entity.title}`, data: {props} }} >{entity.title}</NavLink>
-                            </li>
+                            </ListItem>
                             : searchQuery === "planets" ?
-                            <li key={entity.name}>
+                            <ListItem key={entity.name}>
                                 <NavLink to={{ pathname: `/planets/${entity.name}`, data: {props} }} >{entity.name}</NavLink>
-                            </li>
+                            </ListItem>
                             : null
                         )
                     })
                 }
-            </ul>
+            </List>
             
             {
                 next ?
                 <div>
-                    { previous && <button onClick={ () => switchPage(searchQuery, previousPage) }>Go to previous page</button> }
-                    <button onClick={ () => switchPage(searchQuery, nextPage) }>Go to next page</button>
+                    { previous && <Button onClick={ () => switchPage(searchQuery, previousPage) } >Go to previous page</Button> }
+                    <Button onClick={ () => switchPage(searchQuery, nextPage) }>Go to next page</Button>
                 </div>
                 : previous ?
                 <div>
-                    <button onClick={ () => switchPage(searchQuery, previousPage) }>Go to previous page</button> 
+                    <Button onClick={ () => switchPage(searchQuery, previousPage) }>Go to previous page</Button> 
                 </div>
                 : next && previous ?
                 <div>
-                    <button onClick={ () => switchPage(searchQuery, previousPage) }>Go to previous page</button> 
-                    <button onClick={ () => switchPage(searchQuery, nextPage) }>Go to next page</button>
+                    <Button onClick={ () => switchPage(searchQuery, previousPage) }>Go to previous page</Button> 
+                    <Button onClick={ () => switchPage(searchQuery, nextPage) }>Go to next page</Button>
                 </div>
                 : <p>All {searchQuery} are displayed</p>
             }
 
-            <NavLink to="/">Back to main menu</NavLink>
+            <div>
+                <NavLink to="/">Back to main menu</NavLink>
+            </div>
         </>
     )
 }

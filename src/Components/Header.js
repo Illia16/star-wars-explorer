@@ -6,7 +6,7 @@ import AppBar from'@material-ui/core/AppBar';
 function Header() {
     return (
         <AppBar>
-            <Typography variant="h4" component="h1" align="center" >
+            <Typography variant="h2" component="h1" align="center" >
                 Star Wars Explorer
             </Typography>
         </AppBar>

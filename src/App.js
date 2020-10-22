@@ -8,7 +8,14 @@ import MainMenu from './Components/MainMenu';
 import MainResults from './Components/MainResults';
 import SubResults from './Components/SubResults';
 
-import CircularProgress from '@material-ui/core/CircularProgress';
+
+import { ThemeProvider } from '@material-ui/core/styles';
+import theme from './styles/theme';
+
+import WaitingLogo from './styles/WaitingLogo';
+
+import { makeStyles } from '@material-ui/core/styles';
+import { Container } from '@material-ui/core/';
 
 class App extends Component {
   constructor() {
@@ -51,25 +58,30 @@ class App extends Component {
 
   render() {
     return (
-      <Router basename={process.env.PUBLIC_URL}>
-        <Route exact path="/">
-          <Header />
-          <MainMenu
-            states={this.state} 
-            userChoice={this.userChoice}
-          />
-        </Route>
-        
-        <Route exact path={["/people", "/films", "/planets"]}>
-          { !this.state.isLoading && this.state.results[this.state.searchQuery] ? <MainResults states={this.state} switchPage={this.getData} /> : <CircularProgress></CircularProgress>     
-          }
-          { !this.state.searchQuery && <Redirect to="/"/> }
-        </Route>
+      <ThemeProvider theme={theme}>
+        <Container>
+          <Router basename={process.env.PUBLIC_URL}>
+            <Route exact path="/">
+              <Header />
+              <MainMenu
+                states={this.state} 
+                userChoice={this.userChoice}
+              />
+            </Route>
+            
+            <Route exact path={["/people", "/films", "/planets"]}>
+              { !this.state.isLoading && this.state.results[this.state.searchQuery] ? <MainResults states={this.state} switchPage={this.getData} /> : <WaitingLogo></WaitingLogo>
+              }
+              
+              { !this.state.searchQuery && <Redirect to="/"/> }
+            </Route>
 
-        <Route path={["/people/:peopleID", "/films/:filmsID", "/planets/:planetsID"]}  component={ SubResults } >
-          { !this.state.searchQuery && <Redirect to="/"/> }
-        </Route>
-      </Router>
+            <Route path={["/people/:peopleID", "/films/:filmsID", "/planets/:planetsID"]}  component={ SubResults } >
+              { !this.state.searchQuery && <Redirect to="/"/> }
+            </Route>
+          </Router>
+        </Container>
+      </ThemeProvider>
     );
   }
 }
