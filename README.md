@@ -20,7 +20,7 @@ Get the Star Wars data. All about films, movie characters, planets
 	- Click on "Back to all {selected section} to go back to it
 
 ## Live link
-[Star Wars Explorer](https://illia16.github.io/starWarsExplorer/)
+[Star Wars Explorer](https://illia16.github.io/star-wars-explorer/)
 
 ## Built with
 React
