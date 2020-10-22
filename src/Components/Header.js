@@ -1,7 +1,10 @@
+// React
 import React from 'react';
-import 'fontsource-roboto';
-import Typography from '@material-ui/core/Typography';
+
+// Material UI
 import AppBar from'@material-ui/core/AppBar';
+import Typography from '@material-ui/core/Typography';
+import 'fontsource-roboto';
 
 function Header() {
     return (

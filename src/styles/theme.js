@@ -2,6 +2,7 @@ import { createMuiTheme } from '@material-ui/core/styles';
 
 const theme = createMuiTheme({
     overrides: {
+        // entire page
         MuiContainer: {
             root: {
                 minHeight: '100vh',
@@ -11,6 +12,7 @@ const theme = createMuiTheme({
                 alignItems: 'center',
             },
         },
+        // UL
         MuiList: {
             root: {
                 display: 'flex',
@@ -21,6 +23,7 @@ const theme = createMuiTheme({
                 padding: '40px',
             }
         },
+        // UL LI
         MuiListItem: {
             root: {
                 color: '#FFE81F',
@@ -31,6 +34,7 @@ const theme = createMuiTheme({
                 padding: '0 !important',
             }
         },
+        // Top banner with h1
         MuiAppBar: {
             root: {
                 padding: '20px 0',
@@ -43,6 +47,7 @@ const theme = createMuiTheme({
                 position: 'static'
             }
         },
+        // button(next, previous page)
         MuiButton: {
             root: {
                 backgroundColor: '#29292d', 
@@ -55,6 +60,7 @@ const theme = createMuiTheme({
                 fontSize: '1.3rem',
             },
         },
+        // headings
         MuiTypography: {
             root: {
                 color: '#FFE81F',
@@ -63,6 +69,7 @@ const theme = createMuiTheme({
                 marginTop: 'auto'
             }
         },
+        // subResults card background
         MuiCard: {
             root: {
                 margin: 'auto',

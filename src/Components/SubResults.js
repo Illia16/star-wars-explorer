@@ -1,8 +1,9 @@
+// React
 import React, { Component } from 'react';
+import { NavLink } from 'react-router-dom';
 import axios from 'axios';
-import { Route, NavLink } from 'react-router-dom';
 
-import CircularProgress from '@material-ui/core/CircularProgress';
+// Material UI
 import Typography from '@material-ui/core/Typography';
 import AppBar from'@material-ui/core/AppBar';
 import WaitingLogo from '../styles/WaitingLogo';
@@ -10,6 +11,8 @@ import List from '@material-ui/core/List';
 import ListItem from '@material-ui/core/ListItem';
 import Card from '@material-ui/core/Card';
 import 'fontsource-roboto';
+
+// My Sass styles
 import "../styles/app.scss";
 
 class SubResults extends Component {
@@ -20,6 +23,8 @@ class SubResults extends Component {
         }
     }
 
+    // getting data from global props that were passed in MainResults.js
+    // based on that making an api call for a specific entiry(e.g. speficic person, planet, movie)
     componentDidMount() {
         const {location:{ data: { props: { states: { searchQuery } }} } } = this.props;
 
@@ -40,7 +45,6 @@ class SubResults extends Component {
 
     render() {
         const {location:{ data: { props: { states: { searchQuery } }} } } = this.props;
-        console.log(this.props);
 
         return(
             <>
@@ -49,7 +53,10 @@ class SubResults extends Component {
                         {searchQuery}
                     </Typography>
                 </AppBar>
-                {  searchQuery === "people" && this.state.results.length ?          
+
+                {/* Below, rendering individual information of the entiry based on the search query (people || films || planets)  */}
+                {
+                searchQuery === "people" && this.state.results.length ?     
                     <Card>
                         <List>
                             <Typography variant="h2" component="h2" align="center" >
@@ -76,8 +83,7 @@ class SubResults extends Component {
                             </ListItem>
                         </List>
                     </Card>
-                    : searchQuery === "films" && this.state.results.length ?
-                        
+                : searchQuery === "films" && this.state.results.length ?
                     <Card>
                         <List>
                             <Typography variant="h2" component="h2" align="center" >
@@ -88,7 +94,7 @@ class SubResults extends Component {
                             <ListItem>Release date: {this.state.results[0].release_date}</ListItem>
                         </List>
                     </Card>
-                    : searchQuery === "planets" && this.state.results.length ?       
+                : searchQuery === "planets" && this.state.results.length ?       
                     <Card>
                         <List>
                             <Typography variant="h2" component="h2" align="center" >
@@ -98,9 +104,10 @@ class SubResults extends Component {
                             <ListItem>Population: {this.state.results[0].population}</ListItem>
                         </List>
                     </Card>
-                    : <WaitingLogo></WaitingLogo>
+                : <WaitingLogo></WaitingLogo>
                 }
                 
+                {/* back to all ( people || films || planets)  link */}
                 <div className="goToUpperLevel">
                     <NavLink to={`/${searchQuery}`} >Back to all {searchQuery}</NavLink>
                 </div>
