@@ -113,9 +113,11 @@ class SubResults extends Component {
                 }
                 
                 {/* back to all ( people || films || planets)  link */}
+                { (searchQuery && this.state.results.length) &&
                 <div className="goToUpperLevel">
                     <NavLink to={`/${searchQuery}`} >Back to all {searchQuery}</NavLink>
                 </div>
+                }
             </>
         )
     }
