@@ -8,6 +8,7 @@ import AppBar from'@material-ui/core/AppBar';
 import WaitingLogo from '../styles/WaitingLogo';
 import List from '@material-ui/core/List';
 import ListItem from '@material-ui/core/ListItem';
+import Card from '@material-ui/core/Card';
 import 'fontsource-roboto';
 import "../styles/app.scss";
 
@@ -44,14 +45,14 @@ class SubResults extends Component {
         return(
             <>
                 <AppBar>
-                    <Typography variant="h4" component="h1" align="center" >
+                    <Typography variant="h1" component="h1" align="center" >
                         {searchQuery}
                     </Typography>
                 </AppBar>
                 {  searchQuery === "people" && this.state.results.length ?          
-                    <>
+                    <Card>
                         <List>
-                            <Typography variant="h5" component="h3" align="center" >
+                            <Typography variant="h2" component="h2" align="center" >
                                 {this.state.results[0].name}
                             </Typography>
 
@@ -74,33 +75,33 @@ class SubResults extends Component {
                                 Birth year: {this.state.results[0].birth_year}
                             </ListItem>
                         </List>
-                    </>
+                    </Card>
                     : searchQuery === "films" && this.state.results.length ?
                         
-                    <>
+                    <Card>
                         <List>
-                            <Typography variant="h5" component="h3" align="center" >
+                            <Typography variant="h2" component="h2" align="center" >
                                 {this.state.results[0].title}
                             </Typography>
                             <ListItem>Director: {this.state.results[0].director}</ListItem>
                             <ListItem>Producer: {this.state.results[0].producer}</ListItem>
                             <ListItem>Release date: {this.state.results[0].release_date}</ListItem>
                         </List>
-                    </>
+                    </Card>
                     : searchQuery === "planets" && this.state.results.length ?       
-                    <>
+                    <Card>
                         <List>
-                            <Typography variant="h5" component="h3" align="center" >
+                            <Typography variant="h2" component="h2" align="center" >
                                 {this.state.results[0].name}
                             </Typography>
                             <ListItem>Terrain: {this.state.results[0].terrain}</ListItem>
                             <ListItem>Population: {this.state.results[0].population}</ListItem>
                         </List>
-                    </>
+                    </Card>
                     : <WaitingLogo></WaitingLogo>
                 }
                 
-                <div>
+                <div className="goToUpperLevel">
                     <NavLink to={`/${searchQuery}`} >Back to all {searchQuery}</NavLink>
                 </div>
             </>

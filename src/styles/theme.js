@@ -1,18 +1,12 @@
 import { createMuiTheme } from '@material-ui/core/styles';
-import { withStyles } from '@material-ui/core/styles';
 
 const theme = createMuiTheme({
     overrides: {
-        // color: '#FFE81F',
-        // text: {
-        //     colorPrimary: '#FFE81F'
-        // },
         MuiContainer: {
             root: {
                 minHeight: '100vh',
                 display: 'flex',
                 flexDirection: 'column',
-                // colorPrimary: '#FFE81F',
                 padding: '0 !important',
                 alignItems: 'center',
             },
@@ -22,28 +16,28 @@ const theme = createMuiTheme({
                 display: 'flex',
                 flexDirection: 'column',
                 justifyContent: 'center',
-                minHeight: '70vh',
                 alignItems: 'center',
+                margin: 'auto',
+                padding: '40px',
             }
         },
         MuiListItem: {
             root: {
+                color: '#FFE81F',
                 display: 'initial',
-                width: '175px',
+                width: '200px',
                 margin: '5px 0',
                 textAlign: "center",
                 padding: '0 !important',
-                // background: '#29292d',
             }
         },
-
         MuiAppBar: {
             root: {
                 padding: '20px 0',
+                textTransform: 'capitalize',
             },
             colorPrimary: {
                 backgroundColor: '#29292d',
-                color: '#FFE81F',
             },
             positionFixed: {
                 position: 'static'
@@ -57,12 +51,22 @@ const theme = createMuiTheme({
                     backgroundColor: '#FFE81F', 
                     color: '#29292d',
                 },
-                margin: '20px'
+                margin: '20px',
+                fontSize: '1.3rem',
             },
         },
         MuiTypography: {
-            h5: {
-                margin: '20px 0'
+            root: {
+                color: '#FFE81F',
+            },
+            h2: {
+                marginTop: 'auto'
+            }
+        },
+        MuiCard: {
+            root: {
+                margin: 'auto',
+                background: '#29292d',
             }
         }
     },

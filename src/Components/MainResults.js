@@ -24,14 +24,22 @@ const MainResults = (props) => {
     const previousPage = previous ? previous.split('').pop() : null;
 
     return(
-        <>  
+        <>
             <AppBar>
-                <Typography variant="h4" component="h1" align="center" >
-                Star Wars {searchQuery}
+                <Typography variant="h1" component="h1" align="center" >
+                {searchQuery}
                 </Typography>
             </AppBar>
 
-            <List>
+            { 
+                (!next && !previous) &&
+                <Typography variant="h2" component="h2" align="center" >
+                    All {searchQuery} are displayed
+                </Typography>
+                // <p>All {searchQuery} are displayed</p> 
+            }
+
+            <List className="subList">
                 {
                     props.states.results[searchQuery].results.map((entity) => {
                         return (
@@ -54,24 +62,24 @@ const MainResults = (props) => {
             </List>
             
             {
-                next ?
-                <div>
-                    { previous && <Button onClick={ () => switchPage(searchQuery, previousPage) } >Go to previous page</Button> }
-                    <Button onClick={ () => switchPage(searchQuery, nextPage) }>Go to next page</Button>
+            next ?
+                <div className="nextPrevPages">
+                    { previous && <Button onClick={ () => switchPage(searchQuery, previousPage) } >Previous page</Button> }
+                    <Button onClick={ () => switchPage(searchQuery, nextPage) }>Next page</Button>
                 </div>
                 : previous ?
-                <div>
-                    <Button onClick={ () => switchPage(searchQuery, previousPage) }>Go to previous page</Button> 
+                <div className="nextPrevPages">
+                    <Button onClick={ () => switchPage(searchQuery, previousPage) }>Previous page</Button> 
                 </div>
-                : next && previous ?
-                <div>
-                    <Button onClick={ () => switchPage(searchQuery, previousPage) }>Go to previous page</Button> 
-                    <Button onClick={ () => switchPage(searchQuery, nextPage) }>Go to next page</Button>
+                : (next && previous) ?
+                <div className="nextPrevPages">
+                    <Button onClick={ () => switchPage(searchQuery, previousPage) }>Previous page</Button> 
+                    <Button onClick={ () => switchPage(searchQuery, nextPage) }>Next page</Button>
                 </div>
-                : <p>All {searchQuery} are displayed</p>
+                : null
             }
 
-            <div>
+            <div className="goToUpperLevel">
                 <NavLink to="/">Back to main menu</NavLink>
             </div>
         </>

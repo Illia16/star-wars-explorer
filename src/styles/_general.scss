@@ -8,13 +8,25 @@ body {
     background-repeat: no-repeat;
 }
 
+// main menu list(people, movies, planets)
 .topLevelLists {
     text-transform: uppercase;
+
     li {
         margin: 20px 0;
     }
 }
 
+// sublist styling(people, fimls, planets)
+.subList {
+    display: grid !important;
+    grid-template-columns: repeat(auto-fit, minmax(175px, 1fr));
+    grid-gap: 30px;
+    justify-items: center;
+    width: 100%;
+}
+
+// go back links and other
 a {
     color: #FFE81F;
     padding: 5px 10px;
@@ -31,6 +43,11 @@ a {
 }
 
 // Style for a LINK to go one lever up
-.goLevelUp {
-    text-align: center;
+.goToUpperLevel {
+    margin-bottom: auto;
+}
+
+// nextPrev pages button positioning
+.nextPrevPages {
+    margin: 0 0 50px 0;
 }
