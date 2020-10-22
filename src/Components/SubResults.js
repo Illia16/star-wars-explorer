@@ -20,6 +20,7 @@ class SubResults extends Component {
         super();
         this.state = {
             results: [],
+            loadingErrorMsg: null,
         }
     }
 
@@ -27,7 +28,6 @@ class SubResults extends Component {
     // based on that making an api call for a specific entiry(e.g. speficic person, planet, movie)
     componentDidMount() {
         const {location:{ data: { props: { states: { searchQuery } }} } } = this.props;
-
         axios({
             url: `https://swapi.dev/api/${searchQuery}/`,
             method: 'GET',
@@ -40,7 +40,12 @@ class SubResults extends Component {
                 results: res.data.results,
             })
         })
-        .catch( error => { console.log(error); })
+        .catch( error => {
+            //saving error msg from API in state for further use
+            this.setState({
+                loadingErrorMsg: error.response.statusText
+            });
+        })
     }
 
     render() {
