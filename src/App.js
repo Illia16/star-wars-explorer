@@ -29,6 +29,7 @@ class App extends Component {
       };
   };
 
+  // declaring the function that sets state for user's choice first, then makes an API call based on the user selection
   userChoice = async (e) => {
     await this.setState({
       searchQuery: e.target.name,
@@ -79,7 +80,7 @@ class App extends Component {
               </Route>
               
               {/* Rendering MainResults component only when API call is done(loading ended) and there's results available */}
-              <Route exact path={["/people", "/films", "/planets"]}>
+              <Route exact path={["/people/", "/films/", "/planets/"]}>
                 { !this.state.isLoading && this.state.results[this.state.searchQuery] ? <MainResults states={this.state} switchPage={this.getData} /> : <WaitingLogo></WaitingLogo>
                 }
                 
@@ -88,7 +89,7 @@ class App extends Component {
               </Route>
               
               {/* Rendering SubResults component based on every unique path */}
-              <Route path={["/people/:peopleID", "/films/:filmsID", "/planets/:planetsID"]}  component={ SubResults } >
+              <Route path={["/people/:peopleID/", "/films/:filmsID/", "/planets/:planetsID/"]}  component={ SubResults } >
                 { !this.state.searchQuery && <Redirect to="/"/> }
               </Route>
             </Suspense>
