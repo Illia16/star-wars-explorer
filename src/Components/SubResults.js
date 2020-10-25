@@ -1,7 +1,6 @@
 // React
-import React, { Component } from 'react';
+import React from 'react';
 import { NavLink } from 'react-router-dom';
-import axios from 'axios';
 
 // Material UI
 import Typography from '@material-ui/core/Typography';
@@ -16,6 +15,7 @@ import 'fontsource-roboto';
 import "../styles/app.scss";
 
 const SubResults = (props) => {
+    // entity is used to display a certain person/planet/movie detail.
     const {location:{ data: { props: { states: { results, searchQuery} }, entity } } } = props;
     return(
         <>

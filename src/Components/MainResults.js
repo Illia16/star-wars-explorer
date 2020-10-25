@@ -15,7 +15,6 @@ import "../styles/app.scss";
 
 const MainResults = (props) => {
     const {states:{ searchQuery },  switchPage } = props;
-
     // figuring out wheather there's more pages for more results (more than 10 entities)
 
     // strings for next/previous pages from API
