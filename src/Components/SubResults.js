@@ -15,112 +15,77 @@ import 'fontsource-roboto';
 // My Sass styles
 import "../styles/app.scss";
 
-class SubResults extends Component {
-    constructor() {
-        super();
-        this.state = {
-            results: [],
-            loadingErrorMsg: null,
-        }
-    }
+const SubResults = (props) => {
+    const {location:{ data: { props: { states: { results, searchQuery} }, entity } } } = props;
+    return(
+        <>
+            <AppBar>
+                <Typography variant="h1" component="h1" align="center" >
+                    {searchQuery}
+                </Typography>
+            </AppBar>
 
-    // getting data from global props that were passed in MainResults.js
-    // based on that making an api call for a specific entiry(e.g. speficic person, planet, movie)
-    componentDidMount() {
-        const {location:{ data: { props: { states: { searchQuery } }} } } = this.props;
-        axios({
-            url: `https://swapi.dev/api/${searchQuery}/`,
-            method: 'GET',
-            params: {
-                search: this.props.match.params[searchQuery + "ID"],
-            },
-        })
-        .then( (res) => {
-            this.setState({
-                results: res.data.results,
-            })
-        })
-        .catch( error => {
-            //saving error msg from API in state for further use
-            this.setState({
-                loadingErrorMsg: error.response.statusText
-            });
-        })
-    }
+            {/* Below, rendering individual information of the entiry based on the search query (people || films || planets)  */}
+            {
+            searchQuery === "people" && results[searchQuery].results.length ?    
+                <Card>
+                    <List>
+                        <Typography variant="h2" component="h2" align="center" >
+                            {entity.name}
+                        </Typography>
 
-    render() {
-        const {location:{ data: { props: { states: { searchQuery } }} } } = this.props;
-
-        return(
-            <>
-                <AppBar>
-                    <Typography variant="h1" component="h1" align="center" >
-                        {searchQuery}
-                    </Typography>
-                </AppBar>
-
-                {/* Below, rendering individual information of the entiry based on the search query (people || films || planets)  */}
-                {
-                searchQuery === "people" && this.state.results.length ?     
-                    <Card>
-                        <List>
-                            <Typography variant="h2" component="h2" align="center" >
-                                {this.state.results[0].name}
-                            </Typography>
-
-                            <ListItem>
-                                Height: {this.state.results[0].height}
-                            </ListItem>
-                            <ListItem>
-                                Mass: {this.state.results[0].mass}
-                            </ListItem>
-                            <ListItem>
-                                Hair color: {this.state.results[0].hair_color}
-                            </ListItem>
-                            <ListItem>
-                                Skin Color: {this.state.results[0].skin_color}
-                            </ListItem>
-                            <ListItem>
-                                Gender: {this.state.results[0].gender}
-                            </ListItem>
-                            <ListItem>
-                                Birth year: {this.state.results[0].birth_year}
-                            </ListItem>
-                        </List>
-                    </Card>
-                : searchQuery === "films" && this.state.results.length ?
-                    <Card>
-                        <List>
-                            <Typography variant="h2" component="h2" align="center" >
-                                {this.state.results[0].title}
-                            </Typography>
-                            <ListItem>Director: {this.state.results[0].director}</ListItem>
-                            <ListItem>Producer: {this.state.results[0].producer}</ListItem>
-                            <ListItem>Release date: {this.state.results[0].release_date}</ListItem>
-                        </List>
-                    </Card>
-                : searchQuery === "planets" && this.state.results.length ?       
-                    <Card>
-                        <List>
-                            <Typography variant="h2" component="h2" align="center" >
-                                {this.state.results[0].name}
-                            </Typography>
-                            <ListItem>Terrain: {this.state.results[0].terrain}</ListItem>
-                            <ListItem>Population: {this.state.results[0].population}</ListItem>
-                        </List>
-                    </Card>
-                : <WaitingLogo></WaitingLogo>
-                }
-                
-                {/* back to all ( people || films || planets)  link */}
-                { (searchQuery && this.state.results.length) &&
-                <div className="goToUpperLevel">
-                    <NavLink to={`/${searchQuery}`} >Back to all {searchQuery}</NavLink>
-                </div>
-                }
-            </>
-        )
-    }
-}
+                        <ListItem>
+                            Height: {entity.height}
+                        </ListItem>
+                        <ListItem>
+                            Mass: {entity.mass}
+                        </ListItem>
+                        <ListItem>
+                            Hair color: {entity.hair_color}
+                        </ListItem>
+                        <ListItem>
+                            Skin Color: {entity.skin_color}
+                        </ListItem>
+                        <ListItem>
+                            Gender: {entity.gender}
+                        </ListItem>
+                        <ListItem>
+                            Birth year: {entity.birth_year}
+                        </ListItem>
+                    </List>
+                </Card>
+            : searchQuery === "films" && results[searchQuery].results.length ?
+                <Card>
+                    <List>
+                        <Typography variant="h2" component="h2" align="center" >
+                            {entity.title}
+                        </Typography>
+                        <ListItem>Director: {entity.director}</ListItem>
+                        <ListItem>Producer: {entity.producer}</ListItem>
+                        <ListItem>Release date: {entity.release_date}</ListItem>
+                    </List>
+                </Card>
+            : searchQuery === "planets" && results[searchQuery].results.length ?       
+                <Card>
+                    <List>
+                        <Typography variant="h2" component="h2" align="center" >
+                            {entity.name}
+                        </Typography>
+                        <ListItem>Terrain: {entity.terrain}</ListItem>
+                        <ListItem>Population: {entity.population}</ListItem>
+                    </List>
+                </Card>
+            : <WaitingLogo></WaitingLogo>
+            }
+            
+            {/* back to all ( people || films || planets)  link when results are loaded */}
+            { (searchQuery && results[searchQuery].results.length) &&
+            <div className="goToUpperLevel">
+                <NavLink to={`/${searchQuery}`} >Back to all {searchQuery}</NavLink>
+            </div>
+            }
+        </>
+    )
+};
 
 export default SubResults;

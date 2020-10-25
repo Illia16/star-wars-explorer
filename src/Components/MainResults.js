@@ -49,15 +49,15 @@ const MainResults = (props) => {
                         return (
                             searchQuery === "people" ?
                             <ListItem key={entity.name} >
-                                <NavLink to={{ pathname: `/people/${entity.name}`, data: {props} }}>{entity.name}</NavLink>
+                                <NavLink to={{ pathname: `/people/${entity.name}`, data: {props, entity} }}>{entity.name}</NavLink>
                             </ListItem>
                             : searchQuery === "films" ?
                             <ListItem  key={entity.title}>
-                                <NavLink to={{ pathname: `/films/${entity.title}`, data: {props} }} >{entity.title}</NavLink>
+                                <NavLink to={{ pathname: `/films/${entity.title}`, data: {props, entity} }} >{entity.title}</NavLink>
                             </ListItem>
                             : searchQuery === "planets" ?
                             <ListItem key={entity.name}>
-                                <NavLink to={{ pathname: `/planets/${entity.name}`, data: {props} }} >{entity.name}</NavLink>
+                                <NavLink to={{ pathname: `/planets/${entity.name}`, data: {props, entity} }} >{entity.name}</NavLink>
                             </ListItem>
                             : null
                         )
