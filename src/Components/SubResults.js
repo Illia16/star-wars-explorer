@@ -15,7 +15,6 @@ import 'fontsource-roboto';
 import "../styles/app.scss";
 
 const SubResults = (props) => {
-    console.log(props);
     // entity is used to display a certain person/planet/movie detail.
     const {location:{ data: { props: {searchQuery, states }, entity } } } = props;
     return(

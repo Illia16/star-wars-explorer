@@ -19,14 +19,16 @@ import { setUserChoice, setSearchPage } from './actions';
 // What state need to listen to
 const mapStateToProps = (state) => {
   return {
-    searchQuery: state.searchQuery,
+    searchQuery: state.setSearchQuery.searchQuery,
+    page: state.setPage.page,
   }
 };
 
 // What states need to get dispatched(actions)
 const mapDispatchToProps = (dispatch) => {
   return {
-    userChoice: (e) => dispatch(setUserChoice(e.target.name))
+    userChoice: (e) => dispatch(setUserChoice(e.target.name)),
+    setPage: (e) => dispatch(setSearchPage(e.target.value))
   }
 };
 
@@ -41,7 +43,8 @@ const SubResults = lazy(() => import('./Components/SubResults'));
 
 
 function App(props) {
-  const {searchQuery, userChoice } = props;
+  console.log(props);
+  const {setPage, searchQuery, userChoice } = props;
 
   // saving the corresponding results from API call
   const [results, getData] = useState({people: null, films: null, planets: null});
@@ -84,7 +87,7 @@ function App(props) {
             
             {/* Rendering MainResults component only when API call is done(loading ended) and there's results available */}
             <Route exact path={["/people/", "/films/", "/planets/"]}>
-              { !isLoading && results[searchQuery] ? <MainResults states={results} searchQuery={searchQuery} switchPage={userChoice} /> : <WaitingLogo></WaitingLogo>
+              { !isLoading && results[searchQuery] ? <MainResults states={results} searchQuery={searchQuery} setPage={setPage} /> : <WaitingLogo></WaitingLogo>
               }
               {/* Redirecting to main page if route is other than "/" AND there's no searchQuery(page refreshed) */}
               { !searchQuery && <Redirect to="/"/> }

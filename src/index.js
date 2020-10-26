@@ -4,10 +4,14 @@ import App from './App';
 import * as serviceWorker from './serviceWorker';
 
 import { Provider } from 'react-redux';
-import { createStore } from 'redux';
-import { setSearchQuery } from './reducers';
+import { createStore, applyMiddleware, combineReducers } from 'redux';
+import { setSearchQuery, setPage } from './reducers';
+import { createLogger } from 'redux-logger';
+import thunkMiddleware from 'redux-thunk';
 
-const store = createStore(setSearchQuery);
+const logger = createLogger();
+const rootReducer = combineReducers( {setSearchQuery, setPage})
+const store = createStore(rootReducer, applyMiddleware(thunkMiddleware, logger));
 
 ReactDOM.render(
   <React.StrictMode>
