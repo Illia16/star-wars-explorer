@@ -14,12 +14,16 @@ import 'fontsource-roboto';
 import "../styles/app.scss";
 
 const MainResults = (props) => {
-    const {states:{ searchQuery },  switchPage } = props;
-    // figuring out wheather there's more pages for more results (more than 10 entities)
+    console.log(props);
+                        // const {states:{ searchQuery },  switchPage } = props;
+    const {searchQuery, states,  switchPage } = props;
 
+    // figuring out wheather there's more pages for more results (more than 10 entities)
     // strings for next/previous pages from API
-    const next = props.states.results[searchQuery].next;
-    const previous = props.states.results[searchQuery].previous;
+                        // const next = props.states.results[searchQuery].next;
+                        // const previous = props.states.results[searchQuery].previous;
+    const next = props.states[searchQuery].next;
+    const previous = props.states[searchQuery].previous;
 
     // getting a previous/next page number from the strings. If no page, then null
     const nextPage = next ? next.split('').pop() : null;
@@ -44,7 +48,8 @@ const MainResults = (props) => {
             {/* getting a list of entities (people || films || planets), based on the user selection */}
             <List className="subList">
                 {
-                    props.states.results[searchQuery].results.map((entity) => {
+                                    // props.states.results[searchQuery].results.map((entity) => {
+                    props.states[searchQuery].results.map((entity) => {
                         return (
                             searchQuery === "people" ?
                             <ListItem key={entity.name} >

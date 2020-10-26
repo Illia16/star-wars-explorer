@@ -15,8 +15,9 @@ import 'fontsource-roboto';
 import "../styles/app.scss";
 
 const SubResults = (props) => {
+    console.log(props);
     // entity is used to display a certain person/planet/movie detail.
-    const {location:{ data: { props: { states: { results, searchQuery} }, entity } } } = props;
+    const {location:{ data: { props: {searchQuery, states }, entity } } } = props;
     return(
         <>
             <AppBar>
@@ -27,7 +28,7 @@ const SubResults = (props) => {
 
             {/* Below, rendering individual information of the entiry based on the search query (people || films || planets)  */}
             {
-            searchQuery === "people" && results[searchQuery].results.length ?    
+            searchQuery === "people" && states[searchQuery].results.length ?    
                 <Card>
                     <List>
                         <Typography variant="h2" component="h2" align="center" >
@@ -54,7 +55,7 @@ const SubResults = (props) => {
                         </ListItem>
                     </List>
                 </Card>
-            : searchQuery === "films" && results[searchQuery].results.length ?
+            : searchQuery === "films" && states[searchQuery].results.length ?
                 <Card>
                     <List>
                         <Typography variant="h2" component="h2" align="center" >
@@ -65,7 +66,7 @@ const SubResults = (props) => {
                         <ListItem>Release date: {entity.release_date}</ListItem>
                     </List>
                 </Card>
-            : searchQuery === "planets" && results[searchQuery].results.length ?       
+            : searchQuery === "planets" && states[searchQuery].results.length ?       
                 <Card>
                     <List>
                         <Typography variant="h2" component="h2" align="center" >
@@ -79,7 +80,7 @@ const SubResults = (props) => {
             }
             
             {/* back to all ( people || films || planets)  link when results are loaded */}
-            { (searchQuery && results[searchQuery].results.length) &&
+            { (searchQuery && states[searchQuery].results.length) &&
             <div className="goToUpperLevel">
                 <NavLink to={`/${searchQuery}`} >Back to all {searchQuery}</NavLink>
             </div>
