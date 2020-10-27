@@ -14,34 +14,12 @@ import 'fontsource-roboto';
 import "../styles/app.scss";
 
 
-                // // Redux
-                // import { connect } from 'react-redux';
-                // import { setSearchPage } from '../actions';
-
-
-                // // What state need to listen to
-                // const mapStateToProps = (state) => {
-                //     return {
-                //         page: state.setPage.page,
-                //     }
-                // };
-
-                // // What states need to get dispatched(actions)
-                // const mapDispatchToProps = (dispatch) => {
-                //     return {
-                //         setPage: (e) => dispatch(setSearchPage(e.target.value))
-                //     }
-                // };
-
 const MainResults = (props) => {
-    console.log(props);
-    // const {states:{ searchQuery },  switchPage } = props;
-    const {setPage, searchQuery, states, switchPage } = props;
+    // console.log(props);
+    const { setPage, searchQuery, states, switchPage } = props;
 
     // figuring out wheather there's more pages for more results (more than 10 entities)
     // strings for next/previous pages from API
-                        // const next = props.states.results[searchQuery].next;
-                        // const previous = props.states.results[searchQuery].previous;
     const next = props.states[searchQuery].next;
     const previous = props.states[searchQuery].previous;
 
@@ -68,7 +46,6 @@ const MainResults = (props) => {
             {/* getting a list of entities (people || films || planets), based on the user selection */}
             <List className="subList">
                 {
-                                    // props.states.results[searchQuery].results.map((entity) => {
                     props.states[searchQuery].results.map((entity) => {
                         return (
                             searchQuery === "people" ?
@@ -95,21 +72,17 @@ const MainResults = (props) => {
             {
                 next ?
                     <div className="nextPrevPages">
-                        { previous && <Button onClick={ () => switchPage(searchQuery, previousPage) } >Previous page</Button> }
-                        {/* <Button value={nextPage} onClick={ () => switchPage(searchQuery, nextPage) }>Next page</Button> */}
-                        <Button value={nextPage} onClick={ setPage }>Next page</Button>
+                        { previous && <Button onClick={ () => setPage(previousPage) } >Previous page</Button> }
+                        <Button value={nextPage} onClick={ () => setPage(nextPage) }>Next page</Button>
                     </div>
                 : previous ?
                     <div className="nextPrevPages">
-                        {/* <Button onClick={ () => switchPage(searchQuery, previousPage) }>Previous page</Button> */}
-                        <Button value={previousPage} onClick={ setPage } >Previous page</Button>
+                        <Button value={previousPage} onClick={ () => setPage(previousPage) } >Previous page</Button>
                     </div>
                 : (next && previous) ?
                     <div className="nextPrevPages">
-                        {/* <Button onClick={ () => switchPage(searchQuery, previousPage) }>Previous page</Button> */}
-                        <Button value={previousPage} onClick={ setPage } >Previous page</Button>
-                        <Button value={nextPage} onClick={ setPage }>Next page</Button>
-                        {/* <Button onClick={ () => switchPage(searchQuery, nextPage) }>Next page</Button> */}
+                        <Button value={previousPage} onClick={ () => setPage(previousPage) } >Previous page</Button>
+                        <Button value={nextPage} onClick={ () => setPage(nextPage) }>Next page</Button>
                     </div>
                 :   null
             }
@@ -122,5 +95,4 @@ const MainResults = (props) => {
     )
 }
 
-// export default connect(mapStateToProps, mapDispatchToProps)(MainResults);
 export default MainResults;
