@@ -24,7 +24,6 @@ const MainResults = (props) => {
 
     const nextPage = checkNextPage(props.states[searchQuery].next);
     const previousPage = checkPreviousPage(props.states[searchQuery].previous);
-    // console.log(previousPage, nextPage);
     return(
         <>
             <Header title={searchQuery}/>
