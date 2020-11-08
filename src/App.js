@@ -12,45 +12,30 @@ import WaitingLogo from './styles/WaitingLogo';
 // My Sass styles
 import "./styles/app.scss";
 
-// Redux
-import { connect } from 'react-redux';
-import { setUserChoice, setSearchPage, setLoading} from './actions';
-
-// What state need to listen to
-const mapStateToProps = (state) => {
-  return {
-    searchQuery: state.setSearchQuery.searchQuery,
-    page: state.setPage.page,
-    isLoading: state.setLoading.isLoading,
-  }
-};
-
-// What states need to get dispatched(actions)
-const mapDispatchToProps = (dispatch) => {
-  return {
-    userChoice: (e) => dispatch(setUserChoice(e.target.name)),
-    setPage: (val) => dispatch(setSearchPage(val)),
-    setLoading: () => dispatch(setLoading()),
-  }
-};
-
 // Components
 const Header = lazy(() => import('./Components/Header'));
 const MainMenu = lazy(() => import('./Components/MainMenu'));
 const MainResults = lazy(() => import('./Components/MainResults'));
-const SubResults = lazy(() => import('./Components/SubResults'));
+const SubResults = lazy(() => import('./Components/SubResults/SubResults'));
 
 
-function App(props) {
-  console.log(props);
-  // const {page, setPage, isLoading, setLoading, searchQuery, userChoice } = props;
-  const {page, setPage, searchQuery, userChoice } = props;
-
+function App() {
   // saving the corresponding results from API call
+  const [searchQuery, setInput] = useState(null);
+  const [currentPageRes, changePage] = useState(1);
+
   const [results, getData] = useState({people: null, films: null, planets: null});
   const [isLoading, setLoading] = useState(false);
   const [loadingErrorMsg, setloadingErrorMsg] = useState(null);
 
+  const userChoice = (e) => {
+    setInput(e.target.name);
+  };
+
+  const searchQueryReset = () => {
+    setInput(null);
+    changePage(1);
+  };
 
   useEffect( () => {
     if (searchQuery) {
@@ -60,11 +45,11 @@ function App(props) {
           url: `https://swapi.dev/api/${searchQuery}`,
           method: 'GET',
           params: {
-            page: page,
+            page: currentPageRes,
           }
       })
       .then( (res) => {
-        getData({...results, [searchQuery]: res.data}) 
+        getData({...results, [searchQuery]: res.data})
         setLoading(false)
         // setLoading()
       })
@@ -73,7 +58,7 @@ function App(props) {
           setloadingErrorMsg(error.response.data.detail);
       })
     };
-  }, [searchQuery, page]);
+  }, [searchQuery, currentPageRes]);
 
   return (
     // Material UI for styling, Router, Components
@@ -82,7 +67,7 @@ function App(props) {
         <Router basename={process.env.PUBLIC_URL}>
           <Suspense fallback={ <WaitingLogo></WaitingLogo> }>
             <Route exact path="/">
-              <Header />
+              <Header title={searchQuery} />
               <MainMenu
                 states={results} 
                 userChoice={userChoice}
@@ -91,7 +76,7 @@ function App(props) {
             
             {/* Rendering MainResults component only when API call is done(loading ended) and there's results available */}
             <Route exact path={["/people/", "/films/", "/planets/"]}>
-              { !isLoading && results[searchQuery] ? <MainResults states={results} searchQuery={searchQuery} setPage={setPage} /> : <WaitingLogo></WaitingLogo>
+              { !isLoading && results[searchQuery] ? <MainResults states={results} searchQuery={searchQuery} changePage={changePage} searchQueryReset={searchQueryReset} /> : <WaitingLogo></WaitingLogo>
               }
               {/* Redirecting to main page if route is other than "/" AND there's no searchQuery(page refreshed) */}
               { !searchQuery && <Redirect to="/"/> }
@@ -108,4 +93,4 @@ function App(props) {
   );
 }
 
-export default connect(mapStateToProps, mapDispatchToProps)(App);
+export default App;

@@ -4,7 +4,6 @@ import { NavLink } from 'react-router-dom';
 
 // Material UI
 import Typography from '@material-ui/core/Typography';
-import AppBar from'@material-ui/core/AppBar';
 import List from '@material-ui/core/List';
 import ListItem from '@material-ui/core/ListItem';
 import Button from '@material-ui/core/Button';
@@ -13,31 +12,25 @@ import 'fontsource-roboto';
 // My Sass styles
 import "../styles/app.scss";
 
+// UI Components
+import Header from './Header';
+
+// Functions
+import checkNextPage from './Functions/checkNextPage'
+import checkPreviousPage from './Functions/checkPreviousPage'
 
 const MainResults = (props) => {
-    // console.log(props);
-    const { setPage, searchQuery, states, switchPage } = props;
+    const {searchQuery, changePage, searchQueryReset } = props;
 
-    // figuring out wheather there's more pages for more results (more than 10 entities)
-    // strings for next/previous pages from API
-    const next = props.states[searchQuery].next;
-    const previous = props.states[searchQuery].previous;
-
-    // getting a previous/next page number from the strings. If no page, then null
-    const nextPage = next ? next.split('').pop() : null;
-    const previousPage = previous ? previous.split('').pop() : null;
-
+    const nextPage = checkNextPage(props.states[searchQuery].next);
+    const previousPage = checkPreviousPage(props.states[searchQuery].previous);
     return(
         <>
-            <AppBar>
-                <Typography variant="h1" component="h1" align="center" >
-                {searchQuery}
-                </Typography>
-            </AppBar>
+            <Header title={searchQuery}/>
             
             {/* checking if there's only 1 page for results (10 or less entities based on the API structure) */}
             {
-                (!next && !previous) &&
+                (!nextPage && !previousPage) &&
                 <Typography variant="h2" component="h2" align="center" >
                     All {searchQuery} are displayed
                 </Typography>
@@ -70,26 +63,26 @@ const MainResults = (props) => {
             {/* rendering "Previous page" only when "Next page" is clicked so that there's an API call made to get the next 10 results */}
             {/* Clicking "Next page" or "Previous page" makes a corresponding API call after which new results are rendered*/}
             {
-                next ?
+                nextPage ?
                     <div className="nextPrevPages">
-                        { previous && <Button onClick={ () => setPage(previousPage) } >Previous page</Button> }
-                        <Button value={nextPage} onClick={ () => setPage(nextPage) }>Next page</Button>
+                        { previousPage && <Button onClick={ () => changePage(previousPage) } >Previous page</Button> }
+                        <Button onClick={ () => changePage(nextPage) }>Next page</Button>
                     </div>
-                : previous ?
+                : previousPage ?
                     <div className="nextPrevPages">
-                        <Button value={previousPage} onClick={ () => setPage(previousPage) } >Previous page</Button>
+                        <Button onClick={ () => changePage(previousPage) } >Previous page</Button>
                     </div>
-                : (next && previous) ?
+                : (nextPage && previousPage) ?
                     <div className="nextPrevPages">
-                        <Button value={previousPage} onClick={ () => setPage(previousPage) } >Previous page</Button>
-                        <Button value={nextPage} onClick={ () => setPage(nextPage) }>Next page</Button>
+                        <Button onClick={ () => changePage(previousPage) } >Previous page</Button>
+                        <Button onClick={ () => changePage(nextPage) }>Next page</Button>
                     </div>
                 :   null
             }
 
             {/* Back to main menu link */}
             <div className="goToUpperLevel">
-                <NavLink to="/">Back to main menu</NavLink>
+                <NavLink to="/" onClick={ searchQueryReset }>Back to main menu</NavLink>
             </div>
         </>
     )
