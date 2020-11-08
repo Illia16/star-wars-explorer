@@ -1,5 +1,5 @@
 // React
-import React, { Suspense, lazy, useState, useEffect } from 'react';
+import React, { Suspense, lazy, useState, useEffect, useContext } from 'react';
 import { BrowserRouter as Router, Route, Redirect} from 'react-router-dom';
 import axios from 'axios';
 
@@ -16,7 +16,7 @@ import "./styles/app.scss";
 const Header = lazy(() => import('./Components/Header'));
 const MainMenu = lazy(() => import('./Components/MainMenu'));
 const MainResults = lazy(() => import('./Components/MainResults'));
-const SubResults = lazy(() => import('./Components/SubResults'));
+const SubResults = lazy(() => import('./Components/SubResults/SubResults'));
 
 
 function App() {
@@ -30,7 +30,12 @@ function App() {
 
   const userChoice = (e) => {
     setInput(e.target.name);
-  }
+  };
+
+  const searchQueryReset = () => {
+    setInput(null);
+    changePage(1);
+  };
 
   useEffect( () => {
     if (searchQuery) {
@@ -43,7 +48,7 @@ function App() {
           }
       })
       .then( (res) => {
-        getData({...results, [searchQuery]: res.data}) 
+        getData({...results, [searchQuery]: res.data})
         setLoading(false)
       })
       .catch( error => {
@@ -60,7 +65,7 @@ function App() {
         <Router basename={process.env.PUBLIC_URL}>
           <Suspense fallback={ <WaitingLogo></WaitingLogo> }>
             <Route exact path="/">
-              <Header />
+              <Header title={searchQuery} />
               <MainMenu
                 states={results} 
                 userChoice={userChoice}
@@ -69,7 +74,7 @@ function App() {
             
             {/* Rendering MainResults component only when API call is done(loading ended) and there's results available */}
             <Route exact path={["/people/", "/films/", "/planets/"]}>
-              { !isLoading && results[searchQuery] ? <MainResults states={results} searchQuery={searchQuery} changePage={changePage} /> : <WaitingLogo></WaitingLogo>
+              { !isLoading && results[searchQuery] ? <MainResults states={results} searchQuery={searchQuery} changePage={changePage} searchQueryReset={searchQueryReset} /> : <WaitingLogo></WaitingLogo>
               }
               {/* Redirecting to main page if route is other than "/" AND there's no searchQuery(page refreshed) */}
               { !searchQuery && <Redirect to="/"/> }

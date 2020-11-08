@@ -6,11 +6,12 @@ import AppBar from'@material-ui/core/AppBar';
 import Typography from '@material-ui/core/Typography';
 import 'fontsource-roboto';
 
-function Header() {
+function Header(props) {
+    const { title } = props;
     return (
         <AppBar>
             <Typography variant="h1" component="h1" align="center" >
-                Star Wars Explorer
+                {  !title ? 'Star Wars Explorer' : title }
             </Typography>
         </AppBar>
     )
