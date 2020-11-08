@@ -1,5 +1,5 @@
 // React
-import React, { Suspense, lazy, useState, useEffect, useContext } from 'react';
+import React, { Suspense, lazy, useState, useEffect } from 'react';
 import { BrowserRouter as Router, Route, Redirect} from 'react-router-dom';
 import axios from 'axios';
 
