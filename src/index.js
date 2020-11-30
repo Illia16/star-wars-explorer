@@ -3,9 +3,14 @@ import ReactDOM from 'react-dom';
 import App from './App';
 import * as serviceWorker from './serviceWorker';
 
+// Importing contexts
+import LoadingProvider from './Components/smart/Loading/LoadingContext'
+
 ReactDOM.render(
   <React.StrictMode>
+    <LoadingProvider>
       <App />
+    </LoadingProvider>
   </React.StrictMode>,
   document.getElementById('root')
 );

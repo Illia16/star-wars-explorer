@@ -12,6 +12,9 @@ import WaitingLogo from './Components/presentational/WaitingLogo/WaitingLogo';
 // My Sass styles
 import "./styles/general.scss";
 
+// Importing contexts
+import { useLoading } from './Components/smart/Loading/LoadingContext'
+
 // Components
 const Header = lazy(() => import('./Components/presentational/header/Header'));
 const MainMenu = lazy(() => import('./Components/views/MainMenu/MainMenu'));
@@ -20,12 +23,14 @@ const SubResults = lazy(() => import('./Components/SubResults/SubResults'));
 
 
 function App() {
+  const { isLoading, setLoading } = useLoading();
+
   // saving the corresponding results from API call
   const [searchQuery, setInput] = useState(null);
   const [currentPageRes, changePage] = useState(1);
 
   const [results, getData] = useState({people: null, films: null, planets: null});
-  const [isLoading, setLoading] = useState(false);
+  // const [isLoading, setLoading] = useState(false);
   const [loadingErrorMsg, setloadingErrorMsg] = useState(null);
 
   const userChoice = (e) => {
