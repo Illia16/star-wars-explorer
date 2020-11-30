@@ -7,7 +7,7 @@ import axios from 'axios';
 import { Container } from '@material-ui/core/';
 import { ThemeProvider } from '@material-ui/core/styles';
 import theme from './styles/theme';
-import WaitingLogo from './styles/WaitingLogo';
+import WaitingLogo from './Components/presentational/WaitingLogo/WaitingLogo';
 
 // My Sass styles
 import "./styles/general.scss";

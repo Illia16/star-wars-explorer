@@ -3,7 +3,7 @@ import React from 'react';
 import { NavLink } from 'react-router-dom';
 
 // Material UI
-import WaitingLogo from '../../styles/WaitingLogo';
+import WaitingLogo from '../presentational/WaitingLogo/WaitingLogo';
 import 'fontsource-roboto';
 
 // My Sass styles
