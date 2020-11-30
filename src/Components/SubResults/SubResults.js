@@ -7,10 +7,10 @@ import WaitingLogo from '../../styles/WaitingLogo';
 import 'fontsource-roboto';
 
 // My Sass styles
-import "../../styles/app.scss";
+import "../../styles/general.scss";
 
 // Header + SubResuletsComponents
-import Header from '../Header';
+import Header from '../presentational/header/Header';
 import SubResultsPerson from './SubResultsPerson';
 import SubResultsFilm from './SubResultsFilm';
 import SubResultsPlanet from './SubResultsPlanet';

@@ -10,12 +10,12 @@ import theme from './styles/theme';
 import WaitingLogo from './styles/WaitingLogo';
 
 // My Sass styles
-import "./styles/app.scss";
+import "./styles/general.scss";
 
 // Components
-const Header = lazy(() => import('./Components/Header'));
-const MainMenu = lazy(() => import('./Components/MainMenu'));
-const MainResults = lazy(() => import('./Components/MainResults'));
+const Header = lazy(() => import('./Components/presentational/header/Header'));
+const MainMenu = lazy(() => import('./Components/views/MainMenu/MainMenu'));
+const MainResults = lazy(() => import('./Components/views/MainResults/MainResults'));
 const SubResults = lazy(() => import('./Components/SubResults/SubResults'));
 
 

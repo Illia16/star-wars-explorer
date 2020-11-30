@@ -8,7 +8,7 @@ import ListItem from '@material-ui/core/ListItem';
 import 'fontsource-roboto';
 
 // My Sass styles
-import "../styles/app.scss";
+import "../../../styles/general.scss";
 
 const MainMenu = ( props ) => {
     const { userChoice } = props;

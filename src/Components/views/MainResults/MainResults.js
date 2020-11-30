@@ -10,14 +10,14 @@ import Button from '@material-ui/core/Button';
 import 'fontsource-roboto';
 
 // My Sass styles
-import "../styles/app.scss";
+import "../../../styles/general.scss";
 
 // UI Components
-import Header from './Header';
+import Header from '../../presentational/header/Header';
 
 // Functions
-import checkNextPage from './Functions/checkNextPage'
-import checkPreviousPage from './Functions/checkPreviousPage'
+import checkNextPage from '../../../helpers/checkNextPage';
+import checkPreviousPage from '../../../helpers/checkPreviousPage';
 
 const MainResults = (props) => {
     const {searchQuery, changePage, searchQueryReset } = props;

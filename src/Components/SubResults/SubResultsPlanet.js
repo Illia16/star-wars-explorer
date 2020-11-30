@@ -9,7 +9,7 @@ import ListItem from '@material-ui/core/ListItem';
 import 'fontsource-roboto';
 
 // My Sass styles
-import "../../styles/app.scss";
+import "../../styles/general.scss";
 
 const SubResultsPlanet = (props) => {
     // entity is used to display a certain person/planet/movie detail.
