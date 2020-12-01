@@ -8,9 +8,6 @@ import Typography from '@material-ui/core/Typography';
 import ListItem from '@material-ui/core/ListItem';
 import 'fontsource-roboto';
 
-// My Sass styles
-import "../../styles/general.scss";
-
 const SubResultsPerson = (props) => {
     // entity is used to display a certain person/planet/movie detail.
     const { entity:{ name, height, mass, hair_color, skin_color, gender, birth_year } } = props;

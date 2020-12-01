@@ -4,13 +4,19 @@ import App from './App';
 import * as serviceWorker from './serviceWorker';
 
 // Importing contexts
-import LoadingProvider from './Components/smart/Loading/LoadingContext'
+import LoadingProvider from './Components/smart/Loading/LoadingContext';
+import ErrorProvider from './Components/smart/Error/ErrorContext';
+import UserInputProvider from './Components/smart/UserInput/UserInputContext';
 
 ReactDOM.render(
   <React.StrictMode>
-    <LoadingProvider>
-      <App />
-    </LoadingProvider>
+    <UserInputProvider>
+      <LoadingProvider>
+        <ErrorProvider>
+          <App />
+        </ErrorProvider>
+      </LoadingProvider>
+    </UserInputProvider>
   </React.StrictMode>,
   document.getElementById('root')
 );

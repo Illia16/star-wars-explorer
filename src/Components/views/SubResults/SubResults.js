@@ -3,14 +3,14 @@ import React from 'react';
 import { NavLink } from 'react-router-dom';
 
 // Material UI
-import WaitingLogo from '../presentational/WaitingLogo/WaitingLogo';
+import WaitingLogo from '../../presentational/WaitingLogo/WaitingLogo';
 import 'fontsource-roboto';
 
 // My Sass styles
-import "../../styles/general.scss";
+import "../../../styles/general.scss";
 
 // Header + SubResuletsComponents
-import Header from '../presentational/header/Header';
+import Header from '../../presentational/header/Header';
 import SubResultsPerson from './SubResultsPerson';
 import SubResultsFilm from './SubResultsFilm';
 import SubResultsPlanet from './SubResultsPlanet';

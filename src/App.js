@@ -13,39 +13,27 @@ import WaitingLogo from './Components/presentational/WaitingLogo/WaitingLogo';
 import "./styles/general.scss";
 
 // Importing contexts
+import { useInput } from './Components/smart/UserInput/UserInputContext'
 import { useLoading } from './Components/smart/Loading/LoadingContext'
+import { useError } from './Components/smart/Error/ErrorContext'
 
 // Components
 const Header = lazy(() => import('./Components/presentational/header/Header'));
 const MainMenu = lazy(() => import('./Components/views/MainMenu/MainMenu'));
 const MainResults = lazy(() => import('./Components/views/MainResults/MainResults'));
-const SubResults = lazy(() => import('./Components/SubResults/SubResults'));
+const SubResults = lazy(() => import('./Components/views/SubResults/SubResults'));
 
 
 function App() {
   const { isLoading, setLoading } = useLoading();
-
-  // saving the corresponding results from API call
-  const [searchQuery, setInput] = useState(null);
-  const [currentPageRes, changePage] = useState(1);
+  const { errorMsg, setErrorMsg } = useError();
+  const { searchQuery, setInput, currentPageRes, changePage, userChoice, searchQueryReset } = useInput();
 
   const [results, getData] = useState({people: null, films: null, planets: null});
-  // const [isLoading, setLoading] = useState(false);
-  const [loadingErrorMsg, setloadingErrorMsg] = useState(null);
-
-  const userChoice = (e) => {
-    setInput(e.target.name);
-  };
-
-  const searchQueryReset = () => {
-    setInput(null);
-    changePage(1);
-  };
 
   useEffect( () => {
     if (searchQuery) {
       setLoading(true)
-      // setLoading()
       axios({
           url: `https://swapi.dev/api/${searchQuery}`,
           method: 'GET',
@@ -56,11 +44,11 @@ function App() {
       .then( (res) => {
         getData({...results, [searchQuery]: res.data})
         setLoading(false)
-        // setLoading()
       })
       .catch( error => {
-        // saving error msg from API in state for further use
-          setloadingErrorMsg(error.response.data.detail);
+        // saving error msg from API in state for further use     
+        error.response ? setErrorMsg(error.response.data.detail) : setErrorMsg('Bad URL');
+        setLoading(false)
       })
     };
   }, [searchQuery, currentPageRes]);
