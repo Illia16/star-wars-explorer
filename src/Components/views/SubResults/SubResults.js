@@ -6,9 +6,6 @@ import { NavLink } from 'react-router-dom';
 import WaitingLogo from '../../presentational/WaitingLogo/WaitingLogo';
 import 'fontsource-roboto';
 
-// My Sass styles
-import "../../../styles/general.scss";
-
 // Header + SubResuletsComponents
 import Header from '../../presentational/header/Header';
 import SubResultsPerson from './SubResultsPerson';

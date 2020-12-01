@@ -9,9 +9,6 @@ import ListItem from '@material-ui/core/ListItem';
 import Button from '@material-ui/core/Button';
 import 'fontsource-roboto';
 
-// My Sass styles
-import "../../../styles/general.scss";
-
 // UI Components
 import Header from '../../presentational/header/Header';
 

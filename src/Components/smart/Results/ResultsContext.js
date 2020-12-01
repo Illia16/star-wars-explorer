@@ -1,9 +1,9 @@
 import React, { useState, createContext, useContext, useEffect } from 'react';
 import axios from 'axios';
 
-import { useInput } from '../UserInput/UserInputContext'
-import { useLoading } from '../Loading/LoadingContext'
-import { useError } from '../Error/ErrorContext'
+import { useInput } from '../UserInput/UserInputContext';
+import { useLoading } from '../Loading/LoadingContext';
+import { useError } from '../Error/ErrorContext';
 
 const ResultsContext = createContext();
 
@@ -12,9 +12,9 @@ export const useResults = () => {
 };
 
 export default function ResultsProvider({ children }){
-    const { searchQuery, setInput, currentPageRes, changePage, userChoice, searchQueryReset } = useInput();
-    const { isLoading, setLoading } = useLoading();
-    const { errorMsg, setErrorMsg } = useError();
+    const { searchQuery, currentPageRes } = useInput();
+    const { setLoading } = useLoading();
+    const { setErrorMsg } = useError();
 
     const [results, getData] = useState({people: null, films: null, planets: null});
 

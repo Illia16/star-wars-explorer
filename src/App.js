@@ -1,7 +1,6 @@
 // React
-import React, { Suspense, lazy, useState, useEffect } from 'react';
+import React, { Suspense, lazy } from 'react';
 import { BrowserRouter as Router, Route, Redirect} from 'react-router-dom';
-import axios from 'axios';
 
 // Material UI
 import { Container } from '@material-ui/core/';
@@ -13,10 +12,10 @@ import WaitingLogo from './Components/presentational/WaitingLogo/WaitingLogo';
 import "./styles/general.scss";
 
 // Importing contexts
-import { useInput } from './Components/smart/UserInput/UserInputContext'
-import { useLoading } from './Components/smart/Loading/LoadingContext'
-import { useError } from './Components/smart/Error/ErrorContext'
-import { useResults } from './Components/smart/Results/ResultsContext'
+import { useInput } from './Components/smart/UserInput/UserInputContext';
+import { useLoading } from './Components/smart/Loading/LoadingContext';
+import { useError } from './Components/smart/Error/ErrorContext';
+import { useResults } from './Components/smart/Results/ResultsContext';
 
 // Components
 const Header = lazy(() => import('./Components/presentational/header/Header'));
@@ -30,30 +29,6 @@ function App() {
   const { isLoading, setLoading } = useLoading();
   const { errorMsg, setErrorMsg } = useError();
   const { results } = useResults();
-
-  // const [results, getData] = useState({people: null, films: null, planets: null});
-
-  // useEffect( () => {
-  //   if (searchQuery) {
-  //     setLoading(true)
-  //     axios({
-  //         url: `https://swapi.dev/api/${searchQuery}`,
-  //         method: 'GET',
-  //         params: {
-  //           page: currentPageRes,
-  //         }
-  //     })
-  //     .then( (res) => {
-  //       getData({...results, [searchQuery]: res.data})
-  //       setLoading(false)
-  //     })
-  //     .catch( error => {
-  //       // saving error msg from API in state for further use     
-  //       error.response ? setErrorMsg(error.response.data.detail) : setErrorMsg('Bad URL');
-  //       setLoading(false)
-  //     })
-  //   };
-  // }, [searchQuery, currentPageRes]);
 
   return (
     // Material UI for styling, Router, Components
